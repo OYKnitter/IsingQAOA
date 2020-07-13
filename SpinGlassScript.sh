@@ -1,1 +1,1 @@
-python spinglasstest.py --learning_rate=0.01 --pb_type="spinglass" --batch_size=2048 --model_name="rbm" --param_init=0.01 --input_size=121 --optimizer="sgd" --num_of_iterations=500 --use_sr=True --random_example=True
+python spinglasstest.py --learning_rate=0.01 --pb_type="spinglass" --batch_size=2048 --model_name="rbm" --param_init=0.01 --input_size=9 --optimizer="sgd" --num_of_iterations=100 --use_sr=True --random_example=True
