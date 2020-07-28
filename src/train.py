@@ -59,6 +59,7 @@ def run_netket(cf, data, seed):
         use_iterative=cf.use_iterative,
         use_cholesky=cf.use_cholesky,
         diag_shift=0.1)
+
     # run
     start_time = time.time()
     gs.run(output_prefix=os.path.join(cf.dir,"result"), n_iter=cf.num_of_iterations, save_params_every=cf.num_of_iterations)

@@ -10,9 +10,9 @@ cf, unparsed = get_config()
 # Can either generate a random example and list it in InputData.txt OR read an existing example from InputData.txt
 # Existing example data must be formatted identically to the format used by the Cologne spin glass server.
 # Data for an existing example must coincide with '--input_size' flag.
+nodes = int(cf.input_size[0])
 if cf.random_example:
     # Program accepts a node size and constructs a random example
-    nodes = int(cf.input_size[0])
     size = int(math.sqrt(nodes))
     print("Generating a random {}x{} 2D spin glass problem...".format(size,size))
 
@@ -35,8 +35,8 @@ if cf.random_example:
             J[i,target] = value
             file.write(str(i+1)+' '+str(target+1)+' '+str(value)+'\n')
 else:
+    #Program reads a predetermined example from InputData.txt. Node size flug must match input data!
     print("Reading predetermined example...")
-    nodes = int(cf.input_size[0])
     J=np.zeros((nodes,nodes))
     with open('InputData.txt') as file:
         data = file.read().split('\n')
@@ -45,6 +45,9 @@ else:
                 datum = i.split()
                 J[int(datum[0])-1,int(datum[1])-1]=float(datum[2])
 
+if cf.transverse !=0.0:
+    for i in range(nodes):
+        J[i,i] = cf.transverse
 
 # Ground truth solver
 from src.ising_gt import ising_ground_truth

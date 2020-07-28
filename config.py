@@ -57,7 +57,9 @@ misc_arg.add_argument('--num_gpu', type=int, default=0)
 misc_arg.add_argument('--num_trials', type=int, default=1, help='Number of runs with different seeds')
 misc_arg.add_argument('--random_seed', '-r', type=int, default=600, help='Randomization seed')
 misc_arg.add_argument('--present', type=str, default="boxplot")
+
 misc_arg.add_argument('--random_example', type=str2bool, default=False, help='Program generates a random example instead of running a specific one.')
+misc_arg.add_argument('--transverse', type=float, default=0.0, help='Program applies a uniform transverse field component to the Hamiltonian')
 
 
 def get_config():
