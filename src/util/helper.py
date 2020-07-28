@@ -4,7 +4,7 @@ import os
 
 def record_result(cf, exp_name, score, time_elapsed, bound=0, state=None):
     f=open("results.txt", "a+")
-    f.write("[{}] - Score: {:.2f}, Time: {:.2f} seconds\n".format(exp_name, np.abs(score), time_elapsed))
+    f.write("[{}] - Score: {:.2f}, Time: {:.2f} seconds\n".format(exp_name, score, time_elapsed))
     if bound is not None:
         f.write("Bound: {}\n".format(bound))
     if state is not None:

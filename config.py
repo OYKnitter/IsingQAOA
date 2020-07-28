@@ -51,7 +51,7 @@ train_arg.add_argument('--decay_factor', type=float, default=1.0, help='Training
 misc_arg = add_argument_group('Misc')
 misc_arg.add_argument('--framework', '-fr', type=str, \
                       choices= ["netket","random_cut","greedy_cut","goemans_williamson","manopt","RL"], \
-                      default='flowket', help='Options for algorithms')
+                      default='netket', help='Options for algorithms')
 misc_arg.add_argument('--dir', type=str, default='')
 misc_arg.add_argument('--num_gpu', type=int, default=0)
 misc_arg.add_argument('--num_trials', type=int, default=1, help='Number of runs with different seeds')

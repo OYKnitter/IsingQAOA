@@ -70,13 +70,15 @@ def run_netket(cf, data, seed):
     #Exact solver performs sanity check on small lattices (3x3 and 4x4)
     if int(np.sqrt(J.shape[0])) <= 4:
         res = nk.exact.lanczos_ed(hamiltonian, first_n=1, compute_eigenvectors=False)
-        print("Exact ground state energy = {0:.3f}".format(res.eigenvalues[0]))
+        exact_score = res.eigenvalues[0]
+    else:
+        exact_score = 'N/A'
 
     score = result['Energy']
     time_elapsed = end_time - start_time
     # exp_name,_,_ = (cf.dir).partition('-date')
     exp_name = cf.framework + str(cf.input_size)
-    return exp_name, score, time_elapsed
+    return exp_name, score, time_elapsed, exact_score
 ###############################################################################
 ###############################################################################
 ###############################################################################
