@@ -7,13 +7,14 @@ from config import get_config
 from src.util.directory import prepare_dirs_and_logger
 from src.util.data_loader import load_data
 from src.util.helper import record_result
+from src.util.helper import print_result
 
 from src.train import run_netket
 from src.offshelf.MaxCut import off_the_shelf
 from src.offshelf.manopt_maxcut import manopt
 from RL.train import train
 
-from Input.InputOutput import read_or_write
+from src.util.Input.InputOutput import read_or_write
 
 
 def main(cf, seed):
@@ -50,10 +51,7 @@ if __name__ == '__main__':
         random.seed(seed)
 
         exp_name, score, time_elapsed, bound, exact_score = main(cf, seed)
-        print('Framework is {}'.format(exp_name))
-        print("The netket score is {}".format(score))
-        print("Time elapsed: {}".format(time_elapsed))
-        print("Exact ground state energy = {0:.3f}".format(exact_score))
+        print_result(cf, exp_name, score, time_elapsed, exact_score)
 
         #Result recorder needs to be rewritten to accomodate new output format
         #record_result(cf, exp_name, score, time_elapsed, bound)

@@ -10,7 +10,7 @@ from src.objectives.spinglass import SpinGlassEnergy
 ###############################################################################
 ################################ NetKet #######################################
 ###############################################################################
-def run_netket(cf, data, seed):
+def run_netket(cf, data, seed, params = np.array([])):
     # build objective
     if cf.pb_type == "maxcut":
         energy = MaxCutEnergy(cf)

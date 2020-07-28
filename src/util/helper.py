@@ -2,6 +2,15 @@ import numpy as np
 import os
 
 
+def print_result(cf, exp_name, score, time_elapsed, exact_score):
+    print('Framework is {}'.format(exp_name))
+    print("The netket score is {}".format(score))
+    print("Time elapsed: {}".format(time_elapsed))
+    if exact_score == 'N/A':
+        print('Exact ground state energy cannot be verified.')
+    else:
+        print("Exact ground state energy = {0:.3f}".format(exact_score))
+
 def record_result(cf, exp_name, score, time_elapsed, bound=0, state=None):
     f=open("results.txt", "a+")
     f.write("[{}] - Score: {:.2f}, Time: {:.2f} seconds\n".format(exp_name, score, time_elapsed))
