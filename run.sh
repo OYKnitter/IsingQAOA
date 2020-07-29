@@ -1,1 +1,1 @@
-python main.py --learning_rate=0.01 --pb_type="spinglass" --batch_size=128 --model_name="rbm" --param_init=0.01 --input_size=16 --optimizer="sgd" --num_of_iterations=20 --use_sr=False --num_trials=1 --random_seed=100 --metatest=True
+python main.py --learning_rate=0.01 --pb_type="spinglass" --batch_size=128 --model_name="rbm" --param_init=0.01 --input_size=16 --optimizer="sgd" --num_of_iterations=30 --use_sr=False --num_trials=3 --random_seed=600 --metatest=True

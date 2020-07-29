@@ -49,18 +49,19 @@ if __name__ == '__main__':
     if cf.metatest:
         with open('src/util/Input/ParamData.txt') as file:
             params=np.loadtxt(file).view(complex)
+    
     for num_trials in range(cf.num_trials):
         seed = cf.random_seed + num_trials
         np.random.seed(seed)
         random.seed(seed)
 
         exp_name, score, time_elapsed, bound, exact_score, params2 = main(cf, seed, params)
-        #Reptile meta-learning update
+        # Reptile meta-learning update
         if cf.metatrain:
-            #Might wanna redo this part to use actual inital parameter data
+            # Technically the metatraining algorithm uses the parameters after the first task as its initialization.
             if num_trials == 0:
                 params = params2
-            params = np.add(params,np.add(params2, params*(-1.0))/float(cf.learning_rate))
+            params = np.add(params,np.add(params2, params*(-1.0))*float(cf.learning_rate)*10)
 
         print_result(cf, exp_name, score, time_elapsed, exact_score)
 
