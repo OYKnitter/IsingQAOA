@@ -54,7 +54,7 @@ misc_arg.add_argument('--framework', '-fr', type=str, \
                       default='netket', help='Options for algorithms')
 misc_arg.add_argument('--dir', type=str, default='')
 misc_arg.add_argument('--num_gpu', type=int, default=0)
-misc_arg.add_argument('--num_trials', type=int, default=1, help='Number of runs with different seeds')
+misc_arg.add_argument('--num_trials', type=int, default=1, help='Number of runs with different seeds; also serves as number of metatrain iterations')
 misc_arg.add_argument('--random_seed', '-r', type=int, default=600, help='Randomization seed')
 misc_arg.add_argument('--present', type=str, default="boxplot")
 

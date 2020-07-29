@@ -17,7 +17,7 @@ from RL.train import train
 from src.util.Input.InputOutput import read_or_write
 
 
-def main(cf, seed):
+def main(cf, seed, params = np.array([])):
     # set up directories
     prepare_dirs_and_logger(cf)
 
@@ -28,7 +28,7 @@ def main(cf, seed):
     # run with algorithm options
     print("*** Running {} ***".format(cf.framework))
     if cf.framework in ["netket"]:
-        exp_name, score, time_elapsed, exact_score = run_netket(cf, data, seed)
+        exp_name, score, time_elapsed, exact_score, params = run_netket(cf, data, seed, params)
     elif cf.framework in ["random_cut", "greedy_cut", "goemans_williamson"]:
         exp_name, score, time_elapsed = off_the_shelf(cf, laplacian=data, method=cf.framework)
         exact_score = 'N/A'
@@ -40,7 +40,7 @@ def main(cf, seed):
         exact_score = 'N/A'
     else:
         raise Exception("unknown framework")
-    return exp_name, score, time_elapsed, bound, exact_score
+    return exp_name, score, time_elapsed, bound, exact_score, params
 
 
 if __name__ == '__main__':

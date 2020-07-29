@@ -78,7 +78,7 @@ def run_netket(cf, data, seed, params = np.array([])):
     time_elapsed = end_time - start_time
     # exp_name,_,_ = (cf.dir).partition('-date')
     exp_name = cf.framework + str(cf.input_size)
-    return exp_name, score, time_elapsed, exact_score
+    return exp_name, score, time_elapsed, exact_score, params
 ###############################################################################
 ###############################################################################
 ###############################################################################
