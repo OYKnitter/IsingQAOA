@@ -45,12 +45,19 @@ def main(cf, seed, params = np.array([])):
 
 if __name__ == '__main__':
     cf, unparsed = get_config()
+    params = np.array([])
     for num_trials in range(cf.num_trials):
         seed = cf.random_seed + num_trials
         np.random.seed(seed)
         random.seed(seed)
 
-        exp_name, score, time_elapsed, bound, exact_score = main(cf, seed)
+        exp_name, score, time_elapsed, bound, exact_score, params2 = main(cf, seed, params)
+        if num_trials == 0:
+            params = params2
+        #Reptile meta-learning update
+        if cf.metatrain:
+            params = np.add(params,np.add(params2, params*(-1.0))/float(cf.learning_rate))
+
         print_result(cf, exp_name, score, time_elapsed, exact_score)
 
         #Result recorder needs to be rewritten to accomodate new output format

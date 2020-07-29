@@ -22,8 +22,16 @@ def run_netket(cf, data, seed, params = np.array([])):
         hamiltonian,graph,hilbert = energy.laplacian_to_hamiltonian(J)
 
     # build model
+    # Model initializes with random parameters if no parameters are provided.
     model = build_model_netket(cf, hilbert)
-    model.init_random_parameters(seed=seed, sigma=cf.param_init)
+    if params.size == 0:
+        model.init_random_parameters(seed=seed, sigma=cf.param_init)
+    elif model.n_par != params.size:
+        raise Exception('Parameter array size incompatible with model.')
+    else:
+        model.parameters = params
+
+    # Exact Sampler is used for systems with less than 16 nodes.
     if int(np.sqrt(J.shape[0])) <= 3:
         sampler = nk.sampler.ExactSampler(machine=model)
     else: 
@@ -66,6 +74,7 @@ def run_netket(cf, data, seed, params = np.array([])):
     end_time = time.time()
     # type(gs).__name__
     result = gs.get_observable_stats()
+    params = model.parameters
     
     #Exact solver performs sanity check on small lattices (3x3 and 4x4)
     if int(np.sqrt(J.shape[0])) <= 4:
