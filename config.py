@@ -59,6 +59,7 @@ misc_arg.add_argument('--random_seed', '-r', type=int, default=600, help='Random
 misc_arg.add_argument('--present', type=str, default="boxplot")
 
 misc_arg.add_argument('--metatrain', type=str2bool, default=False, help='Program performs meta-learning training on --num_trials examples with --num_of_iterations inner loops.')
+misc_arg.add_argument('--metatest', type=str2bool, default=False, help='Program uses initialization from previous metatraining.')
 misc_arg.add_argument('--random_example', type=str2bool, default=False, help='Program generates a random example instead of running a specific one.')
 misc_arg.add_argument('--transverse', type=float, default=0.0, help='Currently applies a uniform transverse field component to the Hamiltonian')
 

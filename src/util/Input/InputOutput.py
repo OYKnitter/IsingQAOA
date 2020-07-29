@@ -10,7 +10,7 @@ def read_or_write(cf):
     J=np.zeros((nodes,nodes))
 
     # Program accepts a node size and constructs a random example
-    if cf.random_example or cf.metatrain:
+    if cf.random_example or cf.metatrain or cf.metatest:
         # 2D Lattices with Periodic Boundary Conditions and Nearest Neighbor Interactions
         if cf.pb_type == 'spinglass':
             size = int(math.sqrt(nodes))

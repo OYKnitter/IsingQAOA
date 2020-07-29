@@ -19,7 +19,7 @@ from src.util.Input.InputOutput import read_or_write
 
 def main(cf, seed, params = np.array([])):
     # set up directories
-    prepare_dirs_and_logger(cf)
+    #prepare_dirs_and_logger(cf)
 
     # set up data
     data = read_or_write(cf)
@@ -46,20 +46,28 @@ def main(cf, seed, params = np.array([])):
 if __name__ == '__main__':
     cf, unparsed = get_config()
     params = np.array([])
+    if cf.metatest:
+        with open('src/util/Input/ParamData.txt') as file:
+            params=np.loadtxt(file).view(complex)
     for num_trials in range(cf.num_trials):
         seed = cf.random_seed + num_trials
         np.random.seed(seed)
         random.seed(seed)
 
         exp_name, score, time_elapsed, bound, exact_score, params2 = main(cf, seed, params)
-        if num_trials == 0:
-            params = params2
         #Reptile meta-learning update
         if cf.metatrain:
+            #Might wanna redo this part to use actual inital parameter data
+            if num_trials == 0:
+                params = params2
             params = np.add(params,np.add(params2, params*(-1.0))/float(cf.learning_rate))
 
         print_result(cf, exp_name, score, time_elapsed, exact_score)
 
         #Result recorder needs to be rewritten to accomodate new output format
         #record_result(cf, exp_name, score, time_elapsed, bound)
+    
+    if cf.metatrain:
+        with open('src/util/Input/ParamData.txt','w') as file:
+            np.savetxt(file, params.view(float))
     print('finished')
