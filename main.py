@@ -58,10 +58,11 @@ if __name__ == '__main__':
         exp_name, score, time_elapsed, bound, exact_score, params2 = main(cf, seed, params)
         # Reptile meta-learning update
         if cf.metatrain:
-            # Technically the metatraining algorithm uses the parameters after the first task as its initialization.
+            # Metatraining algorithm has to retrieve random initialization from text file on first iteration
             if num_trials == 0:
-                params = params2
-            params = np.add(params,np.add(params2, params*(-1.0))*float(cf.learning_rate)*10)
+                with open('src/util/Input/ParamData.txt') as file:
+                    params=np.loadtxt(file).view(complex)
+            params = np.add(params,np.add(params2, params*(-1.0))*float(cf.metalearning_rate))
 
         print_result(cf, exp_name, score, time_elapsed, exact_score)
 

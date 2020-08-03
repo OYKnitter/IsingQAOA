@@ -26,6 +26,11 @@ def run_netket(cf, data, seed, params = np.array([])):
     model = build_model_netket(cf, hilbert)
     if params.size == 0:
         model.init_random_parameters(seed=seed, sigma=cf.param_init)
+        params = model.parameters
+        # During meta-training, run_netket saves random initialization to parameter text file for the main file to use.
+        if cf.metatrain:
+            with open('src/util/Input/ParamData.txt','w') as file:
+                np.savetxt(file, params.view(float))
     elif model.n_par != params.size:
         raise Exception('Parameter array size incompatible with model.')
     else:
@@ -76,7 +81,7 @@ def run_netket(cf, data, seed, params = np.array([])):
     result = gs.get_observable_stats()
     params = model.parameters
     
-    #Exact solver performs sanity check on small lattices (3x3 and 4x4)
+    #Exact solver performs sanity check on small problem sizes (at most 16 nodes)
     if int(np.sqrt(J.shape[0])) <= 4:
         res = nk.exact.lanczos_ed(hamiltonian, first_n=1, compute_eigenvectors=False)
         exact_score = res.eigenvalues[0]

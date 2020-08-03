@@ -1,4 +1,3 @@
-
 import argparse
 import numpy as np
 
@@ -20,6 +19,7 @@ def define_args_parser():
 # Network
 net_arg = add_argument_group('Network')
 net_arg.add_argument('--learning_rate', '-l', default=0.05, type=float, help='The learning rate')
+net_arg.add_argument('--metalearning_rate', '-ml', default=0.05, type=float, help='The meta-learning rate')
 net_arg.add_argument('--kernel_size', '-k', type=int, default=4, help='The kernel size of each conv layer')
 net_arg.add_argument('--depth', '-d', type=int, default=1, help='Num of layers before sum pooling')
 net_arg.add_argument('--width', '-w', type=int, default=1, help='Num of output channels in each layer')
@@ -43,7 +43,7 @@ train_arg.add_argument('--use_cholesky', type=str2bool, default=True, help='use 
 train_arg.add_argument('--use_iterative', type=str2bool, default=True, help='use iterative solver in SR')
 train_arg.add_argument('--optimizer', \
                        choices=["adadelta","adagrad","adamax","momentum","rmsprop","sgd"], \
-                       default="sr", help='The optimizer for training')
+                       default="sgd", help='The optimizer for training')
 train_arg.add_argument('--use_sr', type=str2bool, default=True, help='use stochastic reconfiguration for training')
 train_arg.add_argument('--decay_factor', type=float, default=1.0, help='Training decay factor')
 
@@ -60,7 +60,7 @@ misc_arg.add_argument('--present', type=str, default="boxplot")
 
 misc_arg.add_argument('--metatrain', type=str2bool, default=False, help='Program performs meta-learning training on --num_trials examples with --num_of_iterations inner loops.')
 misc_arg.add_argument('--metatest', type=str2bool, default=False, help='Program uses initialization from previous metatraining.')
-misc_arg.add_argument('--random_example', type=str2bool, default=False, help='Program generates a random example instead of running a specific one.')
+misc_arg.add_argument('--random_example', '-rex', type=str2bool, default=False, help='Program generates a random example instead of running a specific one.')
 misc_arg.add_argument('--transverse', type=float, default=0.0, help='Currently applies a uniform transverse field component to the Hamiltonian')
 
 
