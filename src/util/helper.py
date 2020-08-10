@@ -1,10 +1,26 @@
 import numpy as np
 import os
 
+# Either reads from ParamData file or writes to it, depending on whether it has been passed a parameter argument.
+def param_reader(cf, params = np.array([])):
+    if params.size == 0:
+        with open('src/util/Input/ParamData.txt') as file:
+            if cf.model_name == 'rbm':
+                params=np.loadtxt(file).view(complex)
+            else:
+                params=np.loadtxt(file)
+        return params
+    else:
+        with open('src/util/Input/ParamData.txt','w') as file:
+            if cf.model_name == 'rbm':
+                np.savetxt(file, params.view(float))
+            else:
+                np.savetxt(file, params)
+        return
 
 def print_result(cf, exp_name, score, time_elapsed, exact_score):
     print('Framework is {}'.format(exp_name))
-    print("The netket score is {}".format(score))
+    print("The solver score is {}".format(score))
     print("Time elapsed: {}".format(time_elapsed))
     if exact_score == 'N/A':
         print('Exact ground state energy cannot be verified.')

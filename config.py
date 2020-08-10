@@ -23,7 +23,7 @@ net_arg.add_argument('--metalearning_rate', '-ml', default=0.05, type=float, hel
 net_arg.add_argument('--kernel_size', '-k', type=int, default=4, help='The kernel size of each conv layer')
 net_arg.add_argument('--depth', '-d', type=int, default=1, help='Num of layers before sum pooling')
 net_arg.add_argument('--width', '-w', type=int, default=1, help='Num of output channels in each layer')
-net_arg.add_argument('--activation', type=str, choices=["relu", "tanh"], default="tanh", help='The activation function')
+net_arg.add_argument('--activation', type=str, choices=["relu", "tanh"], default="relu", help='The activation function')
 net_arg.add_argument('--model_name', '-m', type=str, \
                      choices=["rbm","rbm_real","mlp","conv_net"], \
                      default='rbm', help='Model architecture')
@@ -50,7 +50,7 @@ train_arg.add_argument('--decay_factor', type=float, default=1.0, help='Training
 # Misc
 misc_arg = add_argument_group('Misc')
 misc_arg.add_argument('--framework', '-fr', type=str, \
-                      choices= ["netket","random_cut","greedy_cut","goemans_williamson","manopt","RL"], \
+                      choices= ["netket","random_cut","greedy_cut","goemans_williamson","manopt","RL", "reptile_demo"], \
                       default='netket', help='Options for algorithms')
 misc_arg.add_argument('--dir', type=str, default='')
 misc_arg.add_argument('--num_gpu', type=int, default=0)

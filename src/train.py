@@ -7,6 +7,8 @@ from src.util.models import build_model_netket
 from src.objectives.max_cut import MaxCutEnergy
 from src.objectives.spinglass import SpinGlassEnergy
 
+from src.util.helper import param_reader
+
 ###############################################################################
 ################################ NetKet #######################################
 ###############################################################################
@@ -29,8 +31,7 @@ def run_netket(cf, data, seed, params = np.array([])):
         params = model.parameters
         # During meta-training, run_netket saves random initialization to parameter text file for the main file to use.
         if cf.metatrain:
-            with open('src/util/Input/ParamData.txt','w') as file:
-                np.savetxt(file, params.view(float))
+            param_reader(cf, params)
     elif model.n_par != params.size:
         raise Exception('Parameter array size incompatible with model.')
     else:
