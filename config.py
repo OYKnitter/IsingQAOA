@@ -23,7 +23,7 @@ net_arg.add_argument('--metalearning_rate', '-ml', default=0.05, type=float, hel
 net_arg.add_argument('--kernel_size', '-k', type=int, default=4, help='The kernel size of each conv layer')
 net_arg.add_argument('--depth', '-d', type=int, default=1, help='Num of layers before sum pooling')
 net_arg.add_argument('--width', '-w', type=int, default=1, help='Num of output channels in each layer')
-net_arg.add_argument('--activation', type=str, choices=["relu", "tanh"], default="relu", help='The activation function')
+net_arg.add_argument('--activation', type=str, choices=["relu", "tanh"], default="tanh", help='The activation function')
 net_arg.add_argument('--model_name', '-m', type=str, \
                      choices=["rbm","rbm_real","mlp","conv_net"], \
                      default='rbm', help='Model architecture')
@@ -33,6 +33,7 @@ net_arg.add_argument('--param_init', type=float, default=0.01, help='Model param
 data_arg = add_argument_group('Data')
 data_arg.add_argument('--pb_type', type=str, choices=["maxcut", "spinglass"], default="maxcut", help='The problem type')
 data_arg.add_argument('--batch_size', '-b', type=int, default=128, help='The batch size in each iteration')
+data_arg.add_argument('--metabatch_size', '-mb', type=int, default=10, help='The batch size used for each meta-training update.')
 data_arg.add_argument('--input_size', '-i', nargs="+", type=int, default=(20,1), help='Number of spins in the input')
 data_arg.add_argument('--num_of_iterations', '-ni', type=int, default=0, help='Num of iterations to benchmark')
 

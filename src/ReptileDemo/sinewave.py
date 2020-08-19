@@ -20,10 +20,17 @@ def sinewave(cf, seed, params = np.array([])):
     b = random.uniform(0.0, 2*np.pi)
 
     # Sample training data
-    p = 10
-    x_train = np.zeros(p)
-    for i in range(p):
-        x_train[i] = random.uniform(x_0, x_n)
+
+    if cf.metatrain:
+        p = 50
+        x_train = np.linspace(x_0, x_n, p)
+
+    else:
+        p = 10
+        x_train = np.zeros(p)
+        for i in range(p):
+            x_train[i] = random.uniform(x_0, x_n)
+    
     y_train = a*np.sin(x_train + b)
 
     # Build and compile MLP
@@ -33,6 +40,7 @@ def sinewave(cf, seed, params = np.array([])):
         tf.keras.layers.Dense(1)
     ])
     
+    #Other model attributes
     optimizer = tf.keras.optimizers.SGD(cf.learning_rate)
     loss = tf.keras.losses.MeanSquaredError()
 
@@ -79,6 +87,7 @@ def sinewave(cf, seed, params = np.array([])):
     score = model.evaluate(x_train, y_train)
 
     # Meta-learning test evaluation
+    # Saves plot of curves to main folder
     if cf.metatest:
         x_test = np.arange(x_0, x_n, (x_n - x_0)/100.0)
         y_test = model.predict(x_test)
@@ -86,9 +95,10 @@ def sinewave(cf, seed, params = np.array([])):
 
         plt.plot(x_test, y_true, label = 'True Curve')
         plt.plot(x_test, y_test, label = 'Trained Curve')
-        plt.plot(x_train, y_train, 'g^', label = 'Sampled points')
+        plt.plot(x_train, y_train, 'g^', label = 'Sampled Points')
         plt.legend(loc="upper left")
-        plt.savefig('sinewave.png')
+        plt.savefig('src/ReptileDemo/Output/seed_{}_iterations_{}.png'.format(seed, cf.num_of_iterations))
+        plt.clf()
 
 
     exp_name = cf.framework
