@@ -33,7 +33,7 @@ net_arg.add_argument('--param_init', type=float, default=0.01, help='Model param
 data_arg = add_argument_group('Data')
 data_arg.add_argument('--pb_type', type=str, choices=["maxcut", "spinglass"], default="maxcut", help='The problem type')
 data_arg.add_argument('--batch_size', '-b', type=int, default=128, help='The batch size in each iteration')
-data_arg.add_argument('--metabatch_size', '-mb', type=int, default=10, help='The batch size used for each meta-training update.')
+data_arg.add_argument('--metabatch_size', '-mb', type=int, default=1, help='The batch size used for each meta-training update.')
 data_arg.add_argument('--input_size', '-i', nargs="+", type=int, default=(20,1), help='Number of spins in the input')
 data_arg.add_argument('--num_of_iterations', '-ni', type=int, default=0, help='Num of iterations to benchmark')
 
@@ -51,7 +51,7 @@ train_arg.add_argument('--decay_factor', type=float, default=1.0, help='Training
 # Misc
 misc_arg = add_argument_group('Misc')
 misc_arg.add_argument('--framework', '-fr', type=str, \
-                      choices= ["netket","random_cut","greedy_cut","goemans_williamson","manopt","RL", "reptile_demo"], \
+                      choices= ["netket","random_cut","greedy_cut","goemans_williamson","manopt", "reptile_demo"], \
                       default='netket', help='Options for algorithms')
 misc_arg.add_argument('--dir', type=str, default='')
 misc_arg.add_argument('--num_gpu', type=int, default=0)

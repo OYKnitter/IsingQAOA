@@ -41,7 +41,7 @@ def read_or_write(cf):
             #Build out later
  
     else:
-        #Program reads a predetermined example from InputData.txt. Node size flug must match input data!
+        #Program reads a predetermined example from InputData.txt. Node size flag must match input data!
         print("Reading predetermined example...")
         with open('src/util/Input/InputData.txt') as file:
             data = file.read().split('\n')

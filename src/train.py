@@ -28,10 +28,9 @@ def run_netket(cf, data, seed, params = np.array([])):
     model = build_model_netket(cf, hilbert)
     if params.size == 0:
         model.init_random_parameters(seed=seed, sigma=cf.param_init)
-        params = model.parameters
         # During meta-training, run_netket saves random initialization to parameter text file for the main file to use.
         if cf.metatrain:
-            param_reader(cf, params)
+            param_reader(cf, model.parameters)
     elif model.n_par != params.size:
         raise Exception('Parameter array size incompatible with model.')
     else:
