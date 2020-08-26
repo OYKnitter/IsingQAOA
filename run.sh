@@ -1,1 +1,1 @@
-python main.py -l=0.01 -ml=0.1 --pb_type="spinglass" -b=128 -mb=1 -m="rbm" --param_init=0.01 -i=16 --optimizer="sgd" -ni=10 --use_sr=True -fr='reptile_demo' --num_trials=4000 --random_seed=100 --metatrain=True
+python main.py -l=0.01 -ml=0.1 --pb_type="spinglass" -b=128 -mb=5 -m="rbm" --param_init=0.01 -i=16 --optimizer="sgd" -ni=150 --use_sr=True -fr='netket' --num_trials=10 --random_seed=600 --metatest=True
