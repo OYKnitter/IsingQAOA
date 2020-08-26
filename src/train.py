@@ -6,6 +6,7 @@ import time
 from src.util.models import build_model_netket
 from src.objectives.max_cut import MaxCutEnergy
 from src.objectives.spinglass import SpinGlassEnergy
+from src.objectives.SKspinglass import SKSpinGlassEnergy
 
 from src.util.helper import param_reader
 
@@ -18,10 +19,14 @@ def run_netket(cf, data, seed, params = np.array([])):
         energy = MaxCutEnergy(cf)
         laplacian = data
         hamiltonian,graph,hilbert = energy.laplacian_to_hamiltonian(laplacian)
-    if cf.pb_type == "spinglass":
+    elif cf.pb_type == "spinglass":
         energy = SpinGlassEnergy(cf)
         J = data
         hamiltonian,graph,hilbert = energy.laplacian_to_hamiltonian(J)
+    elif cf.pb_type == 'spinglass-SK':
+        energy = SKSpinGlassEnergy(cf)
+        J = data
+        hamiltonian, graph, hilbert = energy.laplacian_to_hamiltonian(J)
 
     # build model
     # Model initializes with random parameters if no parameters are provided.

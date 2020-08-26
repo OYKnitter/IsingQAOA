@@ -2,7 +2,7 @@ import numpy as np
 import netket as nk
 
 
-class SpinGlassEnergy:
+class SKSpinGlassEnergy:
     def __init__(self, cf):
         self.cf = cf
 
@@ -15,7 +15,11 @@ class SpinGlassEnergy:
         # Pauli z Matrix
         sz = [[1., 0.], [0., -1.]]
         # create graph
-        g = nk.graph.Hypercube(length=int(np.sqrt(N)), n_dim=2, pbc=True)
+        edges = []
+        for i in range(N):
+            for j in range(i, N):
+                if J[i,j] != 0.: edges.append([i, j])
+        g = nk.graph.CustomGraph(edges)
         # system with spin-1/2 particles
         hi = nk.hilbert.Spin(s=0.5, graph=g)
         ha = nk.operator.LocalOperator(hi, offset)
