@@ -17,8 +17,8 @@ def run_netket(cf, data, seed, params = np.array([])):
     # build objective
     if cf.pb_type == "maxcut":
         energy = MaxCutEnergy(cf)
-        laplacian = data
-        hamiltonian,graph,hilbert = energy.laplacian_to_hamiltonian(laplacian)
+        J = data # laplacian
+        hamiltonian,graph,hilbert = energy.laplacian_to_hamiltonian(J)
     elif cf.pb_type == "spinglass":
         energy = SpinGlassEnergy(cf)
         J = data
@@ -80,7 +80,22 @@ def run_netket(cf, data, seed, params = np.array([])):
 
     # run
     start_time = time.time()
-    gs.run(output_prefix=os.path.join(cf.dir,"result"), n_iter=cf.num_of_iterations, save_params_every=cf.num_of_iterations)
+    if cf.metatrain and cf.metalearner == 'iMAML':
+        # Early-stopping criterion for iMAML: gs.iter causes optimization to occur one step at a time.
+        history = []
+        for step in gs.iter(10,1):
+            obs = gs.get_observable_stats()
+            history.append(obs['Energy'].mean)
+            if step >= 10:
+                history.pop(0)
+
+            print(obs['Energy'].mean)
+        print(history)
+        print(sum(history))
+    
+    else:
+        gs.run(output_prefix=os.path.join(cf.dir,"result"), n_iter=cf.num_of_iterations, save_params_every=cf.num_of_iterations)
+    
     end_time = time.time()
     # type(gs).__name__
     result = gs.get_observable_stats()

@@ -19,7 +19,6 @@ def define_args_parser():
 # Network
 net_arg = add_argument_group('Network')
 net_arg.add_argument('--learning_rate', '-l', default=0.05, type=float, help='The learning rate')
-net_arg.add_argument('--metalearning_rate', '-ml', default=0.05, type=float, help='The meta-learning rate')
 net_arg.add_argument('--kernel_size', '-k', type=int, default=4, help='The kernel size of each conv layer')
 net_arg.add_argument('--depth', '-d', type=int, default=1, help='Num of layers before sum pooling')
 net_arg.add_argument('--width', '-w', type=int, default=1, help='Num of output channels in each layer')
@@ -33,7 +32,6 @@ net_arg.add_argument('--param_init', type=float, default=0.01, help='Model param
 data_arg = add_argument_group('Data')
 data_arg.add_argument('--pb_type', type=str, choices=["maxcut", "spinglass", "spinglass-SK"], default="maxcut", help='The problem type')
 data_arg.add_argument('--batch_size', '-b', type=int, default=128, help='The batch size in each iteration')
-data_arg.add_argument('--metabatch_size', '-mb', type=int, default=1, help='The batch size used for each meta-training update.')
 data_arg.add_argument('--input_size', '-i', nargs="+", type=int, default=(20,1), help='Number of spins in the input')
 data_arg.add_argument('--num_of_iterations', '-ni', type=int, default=0, help='Num of iterations to benchmark')
 
@@ -59,10 +57,16 @@ misc_arg.add_argument('--num_trials', type=int, default=1, help='Number of runs 
 misc_arg.add_argument('--random_seed', '-r', type=int, default=600, help='Randomization seed')
 misc_arg.add_argument('--present', type=str, default="boxplot")
 
-misc_arg.add_argument('--metatrain', type=str2bool, default=False, help='Program performs meta-learning training on --num_trials examples with --num_of_iterations inner loops.')
-misc_arg.add_argument('--metatest', type=str2bool, default=False, help='Program uses initialization from previous metatraining.')
 misc_arg.add_argument('--random_example', '-rex', type=str2bool, default=False, help='Program generates a random example instead of running a specific one.')
 misc_arg.add_argument('--transverse', type=float, default=0.0, help='Currently applies a uniform transverse field component to the Hamiltonian')
+
+# Meta-learning
+meta_arg = add_argument_group('Metalearning')
+meta_arg.add_argument('--metalearner', '-ml', type=str, choices=['reptile', 'iMAML'], default='reptile', help='Choice of algorithm for meta-learning')
+meta_arg.add_argument('--metalearning_rate', '-mlr', default=0.05, type=float, help='The meta-learning rate')
+meta_arg.add_argument('--metabatch_size', '-mb', type=int, default=1, help='The batch size used for each meta-training update.')
+meta_arg.add_argument('--metatrain', type=str2bool, default=False, help='Program performs meta-learning training on --num_trials examples with --num_of_iterations inner loops.')
+meta_arg.add_argument('--metatest', type=str2bool, default=False, help='Program uses initialization from previous metatraining.')
 
 
 def get_config():

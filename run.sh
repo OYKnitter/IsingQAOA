@@ -1,1 +1,1 @@
-python main.py -l=0.01 -ml=0.1 --pb_type="spinglass-SK" -b=128 -mb=1 -m="rbm" --param_init=0.01 -i=3 --optimizer="sgd" -ni=50 --use_sr=True -fr='netket' --num_trials=10 --random_seed=600 --metatest=True
+python main.py -l=0.005 --pb_type="maxcut" -b=1024 -m="rbm_real" --param_init=0.01 -i=49 --optimizer="sgd" -ni=300 --use_sr=False -fr='netket' --random_seed=666  -mlr=0.1 -mb=10
