@@ -6,4 +6,4 @@ Meta-learning is done by an implementation of the Reptile algorithm developed by
 
 So far this code is able to solve MaxCut and Ising Model QAOA problems using the Python package NetKet.
 
-This repository has been archived in its current form; while the code contained here should be functional, there are no guarantees that any one part of it will work as intended.
+This repository is no longer being regularly updated; while the code contained here should be functional, there are no guarantees that any one part of it will work as intended.
